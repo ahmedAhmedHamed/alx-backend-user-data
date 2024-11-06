@@ -5,7 +5,9 @@ module to get and obfuscate logs.
 from typing import List
 import re
 import logging
-
+import os
+import mysql
+import mysql.connector
 
 PII_FIELDS = ["email", "phone", "ssn", "password", "ip"]
 
@@ -39,10 +41,12 @@ class RedactingFormatter(logging.Formatter):
     SEPARATOR = ";"
 
     def __init__(self, fields: List[str]):
+        """ init method """
         super(RedactingFormatter, self).__init__(self.FORMAT)
         self.fields = fields
 
     def format(self, record: logging.LogRecord) -> str:
+        """ custom formatter """
         record.msg = filter_datum(self.fields,
                                   self.REDACTION, record.msg,
                                   self.SEPARATOR)
@@ -50,6 +54,7 @@ class RedactingFormatter(logging.Formatter):
 
 
 def get_logger() -> logging.Logger:
+    """ returns logger for user_data """
     logger = logging.Logger("user_data")
     logger.setLevel(logging.INFO)
     handler = logging.StreamHandler()
@@ -57,3 +62,13 @@ def get_logger() -> logging.Logger:
     logger.addHandler(handler)
     return logger
 
+
+def get_db() -> mysql.connector.connection.MySQLConnection:
+    """ gets db from env credentials """
+    return mysql.connector.connection.MySQLConnection(
+
+        user=os.getenv("PERSONAL_DATA_DB_USERNAME", "root"),
+        host=os.getenv("PERSONAL_DATA_DB_HOST", "localhost"),
+        password=os.getenv("PERSONAL_DATA_DB_PASSWORD", ""),
+        database=os.getenv("PERSONAL_DATA_DB_NAME")
+    )
