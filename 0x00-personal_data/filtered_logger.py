@@ -77,3 +77,23 @@ def get_db() -> mysql.connector.connection.MySQLConnection:
 
     connector = mysql.connector.connect(**args)
     return connector
+
+
+def main():
+    """ selects all users and formats them using recating formatter. """
+    db_connection = get_db()
+    my_cursor = db_connection.cursor()
+    my_cursor.execute("SELECT * FROM users;")
+    headers = [field[0] for field in my_cursor.description]
+    logger = get_logger()
+    for row in my_cursor:
+        answer = ''
+        for f, p in zip(row, headers):
+            answer += f'{p}={f}; '
+        logger.info(answer)
+    my_cursor.close()
+    db_connection.close()
+
+
+if __name__ == "__main__":
+    main()
