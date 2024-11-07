@@ -5,7 +5,7 @@ module to get and obfuscate logs.
 from typing import List
 import re
 import logging
-import os
+from os import environ
 import mysql
 import mysql.connector
 
@@ -67,8 +67,8 @@ def get_db() -> mysql.connector.connection.MySQLConnection:
     """ gets db from env credentials """
     return mysql.connector.connection.MySQLConnection(
 
-        user=os.getenv("PERSONAL_DATA_DB_USERNAME", "root"),
-        host=os.getenv("PERSONAL_DATA_DB_HOST", "localhost"),
-        password=os.getenv("PERSONAL_DATA_DB_PASSWORD", ""),
-        database=os.getenv("PERSONAL_DATA_DB_NAME")
+        user=environ.get("PERSONAL_DATA_DB_USERNAME", "root"),
+        host=environ.get("PERSONAL_DATA_DB_HOST", "localhost"),
+        password=environ.get("PERSONAL_DATA_DB_PASSWORD", ""),
+        database=environ.get("PERSONAL_DATA_DB_NAME")
     )
