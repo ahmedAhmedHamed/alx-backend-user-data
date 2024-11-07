@@ -2,14 +2,13 @@
 """
 module to get and obfuscate logs.
 """
-import os
 from typing import List
 import re
 import logging
 from os import environ
 import mysql.connector
 
-PII_FIELDS = ["email", "phone", "ssn", "password", "ip"]
+PII_FIELDS = ("email", "phone", "ssn", "password", "name")
 
 
 def filter_datum(fields: List[str], redaction: str,
@@ -65,10 +64,15 @@ def get_logger() -> logging.Logger:
 
 def get_db() -> mysql.connector.connection.MySQLConnection:
     """ gets db from env credentials """
-    my_database_connection = mysql.connector.connect(
-        password=os.getenv('PERSONAL_DATA_DB_PASSWORD', ''),
-        user=os.getenv('PERSONAL_DATA_DB_USERNAME', 'root'),
-        database=os.getenv('PERSONAL_DATA_DB_NAME'),
-        host=os.getenv('PERSONAL_DATA_DB_HOST', 'localhost')
-    )
-    return my_database_connection
+    username = environ.get("PERSONAL_DATA_DB_USERNAME", "root")
+    host = environ.get("PERSONAL_DATA_DB_HOST", "localhost")
+    db_name = environ.get("PERSONAL_DATA_DB_NAME")
+    password = environ.get("PERSONAL_DATA_DB_PASSWORD", "")
+    args = {'user': username,
+            'host': host,
+            'password': password}
+    if db_name:
+        args['database'] = db_name
+
+    connector = mysql.connector.connect(**args)
+    return connector
