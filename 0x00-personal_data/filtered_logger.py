@@ -74,5 +74,5 @@ def get_db() -> mysql.connector.connection.MySQLConnection:
     if db_name:
         args['database'] = db_name
 
-        connector = mysql.connector.connection.MySQLConnection(**args)
+    connector = mysql.connector.connect(**args)
     return connector
