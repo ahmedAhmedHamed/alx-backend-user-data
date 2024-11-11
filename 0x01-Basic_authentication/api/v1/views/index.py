@@ -42,4 +42,3 @@ def get_unauthorised() -> str:
       - nothing, always aborts with a 403.
     """
     abort(403)
-
