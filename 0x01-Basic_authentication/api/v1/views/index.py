@@ -36,7 +36,7 @@ def get_unauthorised() -> str:
 
 
 @app_views.route('/forbidden', methods=['GET'], strict_slashes=False)
-def get_unauthorised() -> str:
+def get_forbidden() -> str:
     """ GET /api/v1/forbidden
     Return:
       - nothing, always aborts with a 403.
