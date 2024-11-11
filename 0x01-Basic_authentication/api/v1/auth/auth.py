@@ -12,10 +12,10 @@ class Auth:
         """ require auth """
         return False
 
-    def authorization_header(self, request: request=None) -> str:
+    def authorization_header(self, request: request = None) -> str:
         """ authorization header """
         return None
 
-    def current_user(self, request: request=None) -> TypeVar('User'):
+    def current_user(self, request: request = None) -> TypeVar('User'):
         """ current user """
         return None
