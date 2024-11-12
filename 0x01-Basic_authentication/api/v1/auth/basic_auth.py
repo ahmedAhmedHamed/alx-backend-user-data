@@ -32,7 +32,10 @@ class BasicAuth(Auth):
             decodedb64 = base64.b64decode(b64_auth_header)
         except Exception as e:
             return None
-        return decodedb64.decode('utf-8')
+        try:
+            return decodedb64.decode('utf-8')
+        except Exception as e:
+            return None
 
     def extract_user_credentials(self,
                                  decoded_base64_authorization_header: str) -> (
