@@ -28,6 +28,6 @@ class BasicAuth(Auth):
             return None
         try:
             decodedb64 = base64.b64decode(b64_auth_header)
-        except:
+        except Exception as e:
             return None
         return decodedb64.decode('utf-8')
