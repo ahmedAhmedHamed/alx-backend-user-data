@@ -82,4 +82,5 @@ class BasicAuth(Auth):
             self.extract_user_credentials(authorization_header))
         if username is None or password is None:
             return None
-        return username, password
+        user = self.user_object_from_credentials(email, pwd)
+        return user
