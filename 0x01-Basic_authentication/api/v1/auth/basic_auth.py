@@ -57,18 +57,14 @@ class BasicAuth(Auth):
             return None
         if not isinstance(user_email, str) or not isinstance(user_pwd, str):
             return None
-        if not DATA.get('User'):
+        try:
+            users: User = User.search({"email": user_email})
+        except Exception:
             return None
-        users: User = User.search({"email": user_email})
-        if users is None:
-            return None
-        if not isinstance(users, list):
-            users = [users]
         for user in users:
             if user.is_valid_password(user_pwd):
                 return user
         return None
-
     def current_user(self, request=None) -> TypeVar('User'):
         """ gets the current user from authorization header """
         authorization_header = self.authorization_header(request)
