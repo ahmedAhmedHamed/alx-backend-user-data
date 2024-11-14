@@ -37,10 +37,10 @@ class SessionDBAuth(SessionExpAuth):
             return None
         user = users[0]
         start_time = user.created_at
-        if ((start_time + timedelta(seconds=self.session_duration))
-                < datetime.now()):
+        time_delta = timedelta(seconds=self.session_duration)
+        if (start_time + time_delta) < datetime.utcnow():
             return None
-        return user.user_id
+        return user.id
 
     def destroy_session(self, request=None):
         """ Destroys the session and removes it from the storage
