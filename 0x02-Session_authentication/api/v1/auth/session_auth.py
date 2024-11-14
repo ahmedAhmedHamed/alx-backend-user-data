@@ -1,7 +1,11 @@
 #!/usr/bin/env python3
 """ Module of session authentication class
 """
+import os
 import uuid
+
+import flask
+from flask import request
 
 from models.user import User
 from .auth import Auth
