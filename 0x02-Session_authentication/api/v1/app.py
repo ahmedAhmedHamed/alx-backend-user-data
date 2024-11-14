@@ -37,7 +37,7 @@ def handle_auth():
     if not auth.require_auth(request.path, excluded_paths):
         return None
     if auth.authorization_header(request) is None:
-        abort(401)
+        abort(403)
     if auth.current_user(request) is None:
         abort(403)
 
