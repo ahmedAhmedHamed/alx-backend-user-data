@@ -1,3 +1,6 @@
+#!/usr/bin/env python3
+""" Session authentication routes
+"""
 import os
 
 import flask
