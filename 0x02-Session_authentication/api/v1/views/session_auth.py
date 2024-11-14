@@ -4,7 +4,7 @@
 import os
 
 import flask
-from flask import request
+from flask import request, abort
 
 from api.v1.views import app_views
 from models.user import User
@@ -37,3 +37,11 @@ def login_path():
     ret = flask.jsonify(current_user.to_json())
     ret.set_cookie(os.getenv('SESSION_NAME'), session_id)
     return ret
+
+@app_views.route('auth_session/logout', methods=['DELETE'], strict_slashes=False)
+def logout_path():
+    """ logout path """
+    from api.v1.app import auth
+    if auth.destroy_session(request):
+        return flask.jsonify({}), 200
+    return False, abort(404)
