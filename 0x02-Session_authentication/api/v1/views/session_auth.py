@@ -38,6 +38,7 @@ def login_path():
     ret.set_cookie(os.getenv('SESSION_NAME'), session_id)
     return ret
 
+
 @app_views.route('auth_session/logout', methods=['DELETE'], strict_slashes=False)
 def logout_path():
     """ logout path """
