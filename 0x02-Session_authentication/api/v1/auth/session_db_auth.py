@@ -19,7 +19,7 @@ class SessionDBAuth(SessionExpAuth):
         session_id = super().create_session(user_id)
         if user_id is None:
             return None
-        user_session_kwargs = {'user_id:': user_id, 'session_id': session_id}
+        user_session_kwargs = {'user_id': user_id, 'session_id': session_id}
         user_session = UserSession(**user_session_kwargs)
         user_session.save()
         return session_id
@@ -35,12 +35,12 @@ class SessionDBAuth(SessionExpAuth):
             return False
         if not users:
             return None
-        user = users[0]
-        start_time = user.created_at
+        user_session = users[0]
+        start_time = user_session.created_at
         time_delta = timedelta(seconds=self.session_duration)
         if (start_time + time_delta) < datetime.utcnow():
             return None
-        return user.id
+        return user_session.user_id
 
     def destroy_session(self, request=None):
         """ Destroys the session and removes it from the storage
