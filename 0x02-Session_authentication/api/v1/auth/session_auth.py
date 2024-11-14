@@ -10,7 +10,7 @@ class SessionAuth(Auth):
     """ Session authentication class """
     user_id_by_session_id = {}
 
-    def create_session(self, user_id:str = None) -> str:
+    def create_session(self, user_id: str = None) -> str:
         """ creates a unique session for a user """
         if user_id is None:
             return None
