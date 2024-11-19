@@ -45,7 +45,7 @@ class DB:
          as filtered by the method’s input arguments
         """
         column_names = [column.name for column in User.__table__.columns]
-        for key in kwargs:
+        for key in kwargs.keys():
             if key not in column_names:
                 raise InvalidRequestError
         user = self._session.query(User).filter_by(**kwargs).first()
