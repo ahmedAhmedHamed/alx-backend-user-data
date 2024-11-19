@@ -3,7 +3,7 @@
 main app module
 """
 import flask
-from flask import Flask, jsonify, request
+from flask import Flask, jsonify, request, redirect, url_for
 from auth import Auth
 
 
@@ -41,6 +41,16 @@ def login():
     response = jsonify({"email": f"{email}", "message": "logged in"})
     response.set_cookie('session_id', session_id)
     return response
+
+
+@app.route('/sessions', methods=['DELETE'], strict_slashes=False)
+def logout():
+    """ logout path """
+    session_id = request.cookies.get('session_id')
+    user = AUTH.get_user_from_session_id(session_id)
+    if not user:
+        flask.abort(403)
+    return redirect(url_for('/'))
 
 
 if __name__ == "__main__":
