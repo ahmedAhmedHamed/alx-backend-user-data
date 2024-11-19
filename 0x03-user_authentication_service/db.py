@@ -44,7 +44,8 @@ class DB:
         returns the first row found in the users table
          as filtered by the method’s input arguments
         """
-        column_names = [column.name for column in User.__table__.columns]
+        column_names = ['id', 'email', 'hashed_password', 'session_id',
+                        'reset_token']
         for key in kwargs.keys():
             if key not in column_names:
                 raise InvalidRequestError
