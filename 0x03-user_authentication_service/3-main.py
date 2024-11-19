@@ -22,3 +22,6 @@ try:
     print("Password updated")
 except ValueError:
     print("Error")
+user = my_db.find_user_by(id=user.id)
+
+print(user)

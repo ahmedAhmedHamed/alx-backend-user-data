@@ -57,13 +57,13 @@ class DB:
         """ find_user_by to locate the user to update
          the user’s attributes as passed in the method’s arguments
          then commit to db """
-        user = self.find_user_by(id=user_id)
-        if user is None:
-            return None
         column_names = [column.name for column in User.__table__.columns]
         for key in kwargs:
             if key not in column_names:
                 raise ValueError
+        user = self.find_user_by(id=user_id)
+        if user is None:
+            return None
         for key, value in kwargs.items():
             setattr(user, key, value)
 
