@@ -2,7 +2,7 @@
 """auth module
 """
 import bcrypt
-from sqlalchemy.exc import NoResultFound
+from sqlalchemy.orm.exc import NoResultFound
 
 from db import DB
 from user import User
