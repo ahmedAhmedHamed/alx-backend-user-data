@@ -1,7 +1,7 @@
 from app import app, AUTH
 
 
-AUTH.register_user('amongus', 'sus')
+# AUTH.register_user('amongus', 'sus')
 
 app.run(host="0.0.0.0", port="5000")
 
