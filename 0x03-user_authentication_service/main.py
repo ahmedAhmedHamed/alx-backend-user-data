@@ -16,15 +16,17 @@ def register_user(email: str, password: str) -> None:
 
 def log_in_wrong_password(email: str, password: str) -> None:
     """log in user with wrong password endpoint test"""
-    response = requests.post(BASE_URL + 'sessions', data={'email': email,
-                                                       'password': password})
+    response = requests.post(BASE_URL + 'sessions',
+                             data={'email': email,
+                                   'password': password})
     assert (response.status_code == 401)
 
 
 def log_in(email: str, password: str) -> str:
     """ log in user with password endpoint test """
-    response = requests.post(BASE_URL + 'sessions', data={'email': email,
-                                                          'password': password})
+    response = requests.post(BASE_URL + 'sessions',
+                             data={'email': email,
+                                   'password': password})
     assert (response.status_code == 200)
     assert (isinstance(response.cookies.get('session_id'), str))
     return response.cookies.get('session_id')
@@ -53,7 +55,8 @@ def profile_unlogged() -> None:
 
 def reset_password_token(email: str) -> str:
     """ reset password token """
-    response = requests.post(BASE_URL + 'reset_password', data={'email': email})
+    response = requests.post(BASE_URL + 'reset_password',
+                             data={'email': email})
     assert (response.status_code == 200)
     resp_json = response.json()
     assert (resp_json.get('email') == email)
